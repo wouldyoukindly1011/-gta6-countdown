@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#100d22">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GTA VI 倒數">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>GTA VI — Vice City Countdown</title>
+<style>
+:root{color-scheme:dark;--pink:#ff70b7;--cyan:#55e5e8;--gold:#ffc77a}
+*{box-sizing:border-box} html{min-height:100%;background:#100d22}
+body{margin:0;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;color:#fff;background:
+radial-gradient(ellipse at 15% 12%,#773b82 0,transparent 34%),
+radial-gradient(ellipse at 88% 30%,#155b70 0,transparent 30%),
+linear-gradient(160deg,#17112f 0%,#100d22 48%,#080a19 100%);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.15;background-image:linear-gradient(#fff1 1px,transparent 1px),linear-gradient(90deg,#fff1 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(to bottom,black,transparent 78%)}
+.wrap{width:min(100%,520px);margin:auto;padding:calc(env(safe-area-inset-top) + 26px) 22px calc(env(safe-area-inset-bottom) + 28px);position:relative}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:.24em;color:#c9c4df}
+.live{display:flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;background:#ff5a9f;box-shadow:0 0 12px #ff5a9f}
+.hero{text-align:center;margin:52px 0 34px}
+.kicker{font-size:11px;letter-spacing:.42em;color:var(--cyan);text-shadow:0 0 16px #55e5e899}
+h1{margin:10px 0 0;font-size:clamp(48px,14vw,76px);line-height:.88;letter-spacing:-.07em;font-weight:950;font-style:italic;text-shadow:3px 4px 0 #a43d83,0 0 35px #ff70b766}
+h1 span{display:block;font-size:.46em;letter-spacing:.23em;margin-top:12px;color:#ffe2a6;text-shadow:0 0 20px #ffb36a88}
+.city{height:118px;position:relative;margin:18px -22px 0;overflow:hidden}
+.sun{position:absolute;width:122px;height:122px;border-radius:50%;left:calc(50% - 61px);top:0;background:linear-gradient(#ffd28c,#ff70a9 68%,#9b4c9c);box-shadow:0 0 55px #ff70a977}
+.sun:after{content:"";position:absolute;inset:52% 0 0;background:repeating-linear-gradient(to bottom,transparent 0 8px,#311b4a 9px 12px)}
+.skyline{position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(transparent,#101026 75%);clip-path:polygon(0 65%,5% 65%,5% 35%,10% 35%,10% 56%,16% 56%,16% 14%,22% 14%,22% 65%,28% 65%,28% 43%,34% 43%,34% 5%,40% 5%,40% 65%,47% 65%,47% 30%,54% 30%,54% 65%,61% 65%,61% 18%,67% 18%,67% 65%,74% 65%,74% 42%,80% 42%,80% 10%,86% 10%,86% 65%,92% 65%,92% 32%,97% 32%,97% 65%,100% 65%,100% 100%,0 100%)}
+.panel{border:1px solid #ffffff25;background:linear-gradient(145deg,#ffffff13,#ffffff05);border-radius:24px;padding:22px 16px 18px;box-shadow:0 18px 60px #0005,inset 0 1px #ffffff22;backdrop-filter:blur(16px)}
+.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;font-size:10px;letter-spacing:.22em;color:#c9c4df}
+.status{color:var(--pink);letter-spacing:.13em}
+.timer{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.unit{text-align:center;min-width:0}.num{font-variant-numeric:tabular-nums;font-size:clamp(35px,10vw,52px);font-weight:800;letter-spacing:-.06em;line-height:1.1;color:#fff;text-shadow:0 0 22px #ff70b744}
+.label{margin-top:7px;font-size:9px;letter-spacing:.2em;color:#aaa5c2}
+.separator{display:none}
+.date{text-align:center;margin-top:19px;font-size:12px;color:#d8d1e9;letter-spacing:.13em}
+.date strong{color:var(--gold);font-weight:650}
+.footer{display:flex;justify-content:space-between;gap:10px;margin:20px 4px 0;color:#928ba9;font-size:9px;letter-spacing:.16em}
+.controls{display:flex;gap:10px;margin-top:22px}
+button{border:1px solid #ffffff30;background:#ffffff0d;color:#fff;border-radius:14px;padding:13px 15px;font:inherit;font-size:12px;letter-spacing:.08em;flex:1}
+button.primary{background:linear-gradient(100deg,#e84e9c,#8e5bd6);border:0;font-weight:700;box-shadow:0 8px 24px #d94b9c44}
+.note{text-align:center;font-size:10px;line-height:1.7;color:#8f89a8;margin:18px 14px 0}
+dialog{width:min(90%,380px);border:1px solid #ffffff30;border-radius:20px;background:#19142e;color:#fff;padding:22px;box-shadow:0 20px 80px #000b}
+dialog::backdrop{background:#05040acc;backdrop-filter:blur(5px)}
+dialog h2{margin:0 0 14px;font-size:18px}dialog p{font-size:13px;color:#c7c0dc;line-height:1.65}
+input{width:100%;padding:12px;border:1px solid #ffffff30;border-radius:10px;background:#0d0b1b;color:white;font:inherit;margin:8px 0 14px}
+.dialog-actions{display:flex;gap:8px}
+@media(min-height:800px){.hero{margin-top:68px}.city{height:142px}.sun{width:140px;height:140px;left:calc(50% - 70px)}}
+</style>
+</head>
+<body>
+<main class="wrap">
+ <div class="top"><span>LEONIDA STATE</span><span class="live"><i class="dot"></i> COUNTDOWN ACTIVE</span></div>
+ <section class="hero">
+  <div class="kicker">WELCOME BACK TO</div>
+  <h1>GRAND<br>THEFT AUTO<span>VI</span></h1>
+  <div class="city"><div class="sun"></div><div class="skyline"></div></div>
+ </section>
+ <section class="panel">
+  <div class="panel-head"><span>THE WAIT IS ALMOST OVER</span><span class="status" id="status">INCOMING</span></div>
+  <div class="timer" aria-live="off">
+   <div class="unit"><div class="num" id="days">00</div><div class="label">DAYS</div></div>
+   <div class="unit"><div class="num" id="hours">00</div><div class="label">HOURS</div></div>
+   <div class="unit"><div class="num" id="minutes">00</div><div class="label">MINUTES</div></div>
+   <div class="unit"><div class="num" id="seconds">00</div><div class="label">SECONDS</div></div>
+  </div>
+  <div class="date">LAUNCH DATE <strong id="dateText">19 NOV 2026 · 00:00</strong></div>
+ </section>
+ <div class="footer"><span>VICE CITY, USA</span><span>EST. 2026</span><span>RIDE OR DIE</span></div>
+ <div class="controls"><button class="primary" id="installHelp">加入 iPhone 主畫面</button><button id="settings">設定日期</button></div>
+ <p class="note">A PERSONAL COUNTDOWN EXPERIENCE<br>非官方粉絲自製頁面 · GTA 與相關標誌為其權利人所有</p>
+</main>
+<dialog id="dateDialog">
+ <h2>設定發售倒數日期</h2>
+ <p>預設為官方公布的台灣當地時間 2026 年 11 月 19 日 00:00。若發售日期有變動，可在這裡自行修改。</p>
+ <input id="dateInput" type="datetime-local" value="2026-11-19T00:00">
+ <div class="dialog-actions"><button id="cancelDate">取消</button><button class="primary" id="saveDate">儲存日期</button></div>
+</dialog>
+<dialog id="helpDialog">
+ <h2>加入 iPhone 主畫面</h2>
+ <p>1. 請先用 Safari 開啟這個網站。<br>2. 點選底部「分享」圖示。<br>3. 往下找到「加入主畫面」。<br>4. 點選右上角「新增」。<br><br>完成後就能從 iPhone 主畫面直接開啟，並以全螢幕方式顯示。</p>
+ <div class="dialog-actions"><button class="primary" id="closeHelp">知道了</button></div>
+</dialog>
+<script>
+const $=id=>document.getElementById(id);
+let target=localStorage.getItem('gta6-target')||'2026-11-19T00:00';
+function fmt(n){return String(n).padStart(2,'0')}
+function render(){
+ const diff=new Date(target).getTime()-Date.now();
+ if(diff<=0){['days','hours','minutes','seconds'].forEach(id=>$(id).textContent='00');$('status').textContent='IT’S HERE';return}
+ let s=Math.floor(diff/1000);
+ const d=Math.floor(s/86400);s%=86400;
+ const h=Math.floor(s/3600);s%=3600;
+ const m=Math.floor(s/60);s%=60;
+ $('days').textContent=fmt(d);$('hours').textContent=fmt(h);$('minutes').textContent=fmt(m);$('seconds').textContent=fmt(s);
+ $('status').textContent='INCOMING';
+ const dt=new Date(target);
+ $('dateText').textContent=dt.toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).toUpperCase();
+}
+render();setInterval(render,1000);
+$('settings').onclick=()=>{$('dateInput').value=target;$('dateDialog').showModal()};
+$('cancelDate').onclick=()=>$('dateDialog').close();
+$('saveDate').onclick=()=>{const v=$('dateInput').value;if(v){target=v;localStorage.setItem('gta6-target',v);render()}$('dateDialog').close()};
+$('installHelp').onclick=()=>$('helpDialog').showModal();
+$('closeHelp').onclick=()=>$('helpDialog').close();
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body></html>
